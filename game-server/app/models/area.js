@@ -183,11 +183,11 @@ exp.generateTreasures = function (n) {
   if (!n) {
     return;
   }
-  for (var i = 0; i < n; i++) {
-    var d = dataApi.treasure.random();
-    var t = new Treasure({kindId: d.id, kindName: d.name, imgId: d.imgId, score: parseInt(d.heroLevel, 10)});
-    exp.addEntity(t);
-  }
+  //for (var i = 0; i < n; i++) {
+  //  var d = dataApi.treasure.random();
+  //  var t = new Treasure({kindId: d.id, kindName: d.name, imgId: d.imgId, score: parseInt(d.heroLevel, 10)});
+  //  exp.addEntity(t);
+  //}
 };
 
 exp.getAllEntities = function() {

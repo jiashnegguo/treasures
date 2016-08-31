@@ -16,7 +16,7 @@ __resources__["/main.js"] = {
 
     function entry(name, callback) {
       pomelo.init({host: config.GATE_HOST, port: config.GATE_PORT, log: true}, function() {
-        pomelo.request('gate.gateHandler.queryEntry', {uid: name}, function(data) {
+        pomelo.request('gate.gateHandler.queryEntry', {userId: name}, function(data) {
           pomelo.disconnect();
 
           if (data.code === 2001) {
@@ -43,7 +43,7 @@ __resources__["/main.js"] = {
         entry(name, function() {
           loadAnimation(function() {
             pomelo.request('connector.entryHandler.entry', {name: name}, function(data) {
-              pomelo.request("area.playerHandler.enterScene", {name: name, playerId: data.playerId}, function(data){
+              pomelo.request("area.playerHandler.enterScene2", {name: name, playerId: data.playerId, userId : 1234}, function(data){
                 msgHandler.init();
                 app.init(data.data);
               });

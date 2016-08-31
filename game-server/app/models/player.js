@@ -21,6 +21,7 @@ function Player(opts) {
   this.walkSpeed = 240;
   this.score = opts.score || 0;
   this.target = null;
+    this.userId = opts.userId;
 }
 
 util.inherits(Player, Entity);
@@ -50,7 +51,8 @@ Player.prototype.toJSON = function() {
     y: this.y,
 		walkSpeed: this.walkSpeed,
 		areaId: this.areaId,
-    score: this.score
+    score: this.score,
+      userId: this.userId
   };
 };
 

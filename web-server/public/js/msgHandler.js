@@ -50,7 +50,12 @@ __resources__["/msgHandler.js"] = {
 
         var sprite = entity.getSprite();
         var sPos = sprite.getPosition();
-        sprite.movePath([sPos, data.endPos]);
+        sprite.movePath([sPos, path[0]]);
+      });
+
+      // Handle move  message
+      pomelo.on('onAction', function(data) {
+        console.log(data);
       });
 
       // Handle remove item message

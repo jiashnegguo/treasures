@@ -13,7 +13,7 @@ var Handler = function(app) {
 };
 
 Handler.prototype.queryEntry = function(msg, session, next) {
-	var uid = msg.uid;
+	var uid = msg.userId;
 	if (!uid) {
 		next(null, {code: Code.FAIL});
 		return;
