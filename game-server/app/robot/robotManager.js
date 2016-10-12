@@ -30,7 +30,7 @@ var ROBOT_MAX_TIME = 120;
 
 var ROBOT_MIN_TIME = 60;
 
-var ROBOT_MOVE_INTERVAL = 10;
+var ROBOT_MOVE_INTERVAL = 30;
 
 var WEB_SERVER_HOST = 'stage.yunyunlive.cn';
 
@@ -82,7 +82,7 @@ pro.addRobots = function (robots)
         var role = dataApi.role.random();
         var playerId = robots[i].id;
         var name = robots[i].name;
-        var player = new Player({id: playerId, name: name, kindId: role.id});
+        var player = new Player({id: playerId, name: name, kindId: role.id, userId: playerId});
         player.serverId = 0;
         area.addEntity(player);
         var leaveTime = time + Math.random() *(ROBOT_MAX_TIME- ROBOT_MIN_TIME) + ROBOT_MIN_TIME;
@@ -102,7 +102,7 @@ pro.MoveRobots = function ()
             var pathRoute = Path.getPath(player.getPos(), endPos);
 
             area.getChannel().pushMessage({route: 'onMove', entityId: player.entityId, path: pathRoute, userId: player.userId, name: player.name});
-            robotsLife[id].moveTime = time + Math.random() * 20 + ROBOT_MOVE_INTERVAL;
+            robotsLife[id].moveTime =  time + Math.random() * 100 + ROBOT_MOVE_INTERVAL;
         }
     }
 }
