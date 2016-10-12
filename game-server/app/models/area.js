@@ -6,6 +6,8 @@ var timer = require('./timer');
 var EntityType = require('../consts/consts').EntityType;
 var logger = require('pomelo-logger').getLogger(__filename);
 var Treasure = require('./treasure');
+var RobotManager = require('../robot/robotManager');
+var Path = require('./path');
 
 var exp = module.exports;
 
@@ -14,6 +16,7 @@ var width = 0;
 var height = 0;
 
 var actionManager = null;
+var robotManager = null;
 
 var players = {};
 
@@ -35,6 +38,8 @@ exp.init = function(opts) {
 
 	actionManager = new ActionManager();
   exp.generateTreasures(40);
+    robotManager = new RobotManager();
+    Path.init();
 
   //area run
   timer.run();
@@ -237,6 +242,9 @@ exp.actionManager = function() {
 	return actionManager;
 };
 
+exp.robotManager = function() {
+    return robotManager;
+};
 exp.timer = function() {
 	return timer;
 };

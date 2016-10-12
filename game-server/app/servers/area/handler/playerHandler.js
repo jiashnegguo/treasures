@@ -8,6 +8,7 @@ var app = require('pomelo').app;
 var consts = require('../../../consts/consts');
 var dataApi = require('../../../util/dataApi');
 var fs = require('fs');
+var path = require('../../../models/path');
 
 var handler = module.exports;
 
@@ -50,6 +51,9 @@ handler.enterScene = function(msg, session, next) {
 handler.enterScene = function(msg, session, next) {
   var role = dataApi.role.random();
   var player = new Player({id: msg.playerId, name: msg.name, kindId: role.id, userId: msg.userId});
+  
+  var randomPosition = path.getRandomPosition();
+  player.setPos(randomPosition.x, randomPosition.y);
 
   player.serverId = session.frontendId;
   // console.log(player);
@@ -127,14 +131,7 @@ handler.move = function(msg, session, next) {
   var target = area.getEntity(msg.target);
   player.target = target ? target.entityId : null;
 
-  if (endPos.x > area.width() || endPos.y > area.height()) {
-    logger.warn('The path is illigle!! The path is: %j', msg.path);
-    next(new Error('fail to move for illegal path'), {
-      code: consts.MESSAGE.ERR
-    });
 
-    return;
-  }
 
   var action = new Move({
     entity: player,
