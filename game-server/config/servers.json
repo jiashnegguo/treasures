@@ -20,7 +20,7 @@
       {"id": "area-server-1", "host": "127.0.0.1", "port": 3250, "areaId": 1, "webServerHost": "api.hizizai.cn"}
     ],
     "gate": [
-      {"id": "gate-server-1", "host": "127.0.0.1", "clientPort": 3014}
+      {"id": "gate-server-1", "host": "127.0.0.1", "clientPort": 3014, "frontend": true}
     ]
   }
 }
