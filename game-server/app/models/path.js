@@ -183,8 +183,8 @@ pro.getRandomPosition = function()
     var cellX = utils.rand(0, square.SQUARE.WIDTH);
     var cellY = utils.rand(0, square.SQUARE.HEIGHT);
 
-    var pos = this.cellToScenePos(cellX, cellY);
+    var canMoveCell = this.findCanMovePos({x:cellX, y:cellY});
 
-    return this.findCanMovePos(pos);
+    return this.cellToScenePos(canMoveCell.x, canMoveCell.y);
 };
 
