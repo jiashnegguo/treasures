@@ -50,16 +50,16 @@ pro.update = function (){
 
     this.tick = TICK_COUNT;
 
-    pro.LeaveRobots();
+    this.LeaveRobots();
 
-    pro.MoveRobots();
+    this.MoveRobots();
 
     var players = area.getAllPlayers();
 
     if(players.length < MIN_PLAYER_COUNT)
     {
         var robots = players.filter(function(v){ return v.serverId == 0 });
-        pro.AddNewRobots(robots);
+        this.AddNewRobots(robots);
     }
 }
 
