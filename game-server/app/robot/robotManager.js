@@ -9,9 +9,11 @@ var dataApi = require('../util/dataApi');
 var qs = require('querystring');
 var utils = require('../util/utils');
 var Path  = require('../models/path');
+var pomelo = require('pomelo');
 
 var robotManager = function(opts){
     this.tick = TICK_COUNT;
+    this.webServerHost = pomelo.app.getCurServer().webServerHost;
 };
 
 var robotEnabled = true;
@@ -32,7 +34,6 @@ var ROBOT_MIN_TIME = 60;
 
 var ROBOT_MOVE_INTERVAL = 10;
 
-var WEB_SERVER_HOST = 'stage.yunyunlive.cn';
 
 var WEB_SERVER_PATH = '/api/v2/online/robots';
 
@@ -101,7 +102,11 @@ pro.MoveRobots = function ()
             var endPos = Path.getRandomPosition();
             var pathRoute = Path.getPath(player.getPos(), endPos);
 
-            area.getChannel().pushMessage({route: 'onMove', entityId: player.entityId, path: pathRoute, userId: player.userId, name: player.name});
+            if(pathRoute != null)
+            {
+                player.setPos(endPos.x, endPos.y);
+                area.getChannel().pushMessage({route: 'onMove', entityId: player.entityId, path: pathRoute, userId: player.userId, name: player.name});
+            }
             robotsLife[id].moveTime =  time + Math.random() * 30 + ROBOT_MOVE_INTERVAL;
         }
     }
@@ -125,7 +130,7 @@ pro.AddNewRobots = function (robots)
     );
 
     var post_options = {
-        host: WEB_SERVER_HOST,
+        host: this.webServerHost,
         port: '80',
         path: WEB_SERVER_PATH,
         method: 'POST',
