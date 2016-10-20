@@ -15,12 +15,11 @@ pro.init = function(opts)
 
 //格子坐标转场景坐标
 pro.cellToScenePos = function (n, m) {
-    return { x: HALF_CELL_WIDTH * (n - m), y: (HALF_CELL_HEIGHT * (n + m)) + 400 };
+    return { x: HALF_CELL_WIDTH * (n - m), y: (HALF_CELL_HEIGHT * (n + m))};
 };
 
 
 pro.sceneToCellPos = function (x, y) {
-    y -= 400;
     return {
         x: Math.floor(0.5 * (y / (HALF_CELL_HEIGHT) + x / (HALF_CELL_WIDTH)) + 0.5),
         y: Math.floor(0.5 * (y / (HALF_CELL_HEIGHT) - x / (HALF_CELL_WIDTH)) + 0.5)
