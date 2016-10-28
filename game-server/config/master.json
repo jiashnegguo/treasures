@@ -13,6 +13,13 @@
         "port":3005,
         "queryPort":3015,
         "wsPort":2337
-    }
+    },
 
+    "stage":{
+        "id":"master-server-1",
+        "host":"127.0.0.1",
+        "port":3006,
+        "queryPort":3016,
+        "wsPort":2338
+    }
 }

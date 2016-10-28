@@ -14,6 +14,8 @@ var pomelo = require('pomelo');
 var robotManager = function(opts){
     this.tick = TICK_COUNT;
     this.webServerHost = pomelo.app.getCurServer().webServerHost;
+    var port = pomelo.app.getCurServer().webServerPort;
+    this.webServerPort = port ? port : 80;
 };
 
 var robotEnabled = true;
@@ -131,7 +133,7 @@ pro.AddNewRobots = function (robots)
 
     var post_options = {
         host: this.webServerHost,
-        port: '80',
+        port: this.webServerPort,
         path: WEB_SERVER_PATH,
         method: 'POST',
         headers: {
