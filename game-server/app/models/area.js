@@ -22,6 +22,8 @@ var players = {};
 
 var entities = {};
 
+var chats = {};
+
 var channel = null;
 
 var treasureCount = 0;
@@ -245,7 +247,55 @@ exp.actionManager = function() {
 exp.robotManager = function() {
     return robotManager;
 };
+
 exp.timer = function() {
 	return timer;
 };
 
+
+exp.addChat = function(fromId, toId){
+    chats[fromId] = toId;
+}
+
+exp.isInChat = function(id)
+{
+    for(var fromId in chats)
+    {
+        if(fromId == id || chats[fromId] == id)
+            return true;
+    }
+
+    return false;
+}
+
+exp.exitChat = function(id)
+{
+    var player = this.getPlayer(id);
+
+    if(!player)
+        return;
+
+    var deleteId = null;
+    for (var fromId in chats) {
+
+        if(fromId == id || chats[fromId] == id)
+        {
+            deleteId = fromId;
+            var peerId = fromId == id ? chats[fromId] : fromId;
+
+            var peerPlayer = this.getPlayer(peerId);
+
+            if(peerPlayer)
+            {
+                var channel = pomelo.app.get('channelService');
+                channel.pushMessageByUids({route:'onExitChat', entityId: player.entityId, from: player.userId}, [{uid:peerPlayer.id, sid: peerPlayer.serverId}]);
+            }
+            break;
+        }
+    }
+
+    if(deleteId)
+    {
+        delete chats[deleteId];
+    }
+}

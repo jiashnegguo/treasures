@@ -173,3 +173,45 @@ handler.action = function(msg, session, next) {
   area.getChannel().pushMessage({route: 'onAction', entityId: player.entityId, from: player.userId, targetUser: msg.targetUser, actionType: msg.actionType, message: msg.message});
 };
 
+handler.startChat = function (msg, session, next){
+  var playerId = session.get('playerId');
+  var player = area.getPlayer(playerId);
+  if (!player) {
+    logger.error('chat without a valid player ! playerId : %j', playerId);
+    next(new Error('invalid player:' + playerId), {
+      code: consts.MESSAGE.ERR
+    });
+    return;
+  }
+  var targetPlayer = area.getAllPlayers().find((function(v){ return v.userId == msg.targetUser }));
+  if (!targetPlayer) {
+    logger.error('chat without a valid target player ! playerId : %j', playerId);
+    next(new Error('invalid player:' + playerId), {
+      code: consts.MESSAGE.ERR
+    });
+    return;
+  }
+  if(area.isInChat(targetPlayer.id))
+  {
+    next(new Error('already in chat'), {
+      code: consts.MESSAGE.ERR
+    });
+    return;
+  }
+  var channel = app.get('channelService');
+  channel.pushMessageByUids({route:'startChat', entityId: player.entityId, from: player.userId}, [{uid:targetPlayer.id, sid: targetPlayer.serverId}]);
+  area.addChat(playerId, targetPlayer.id);
+};
+handler.exitChat = function (msg, session, next)
+{
+  var playerId = session.get('playerId');
+  var player = area.getPlayer(playerId);
+  if (!player) {
+    logger.error('chat without a valid player ! playerId : %j', playerId);
+    next(new Error('invalid player:' + playerId), {
+      code: consts.MESSAGE.ERR
+    });
+    return;
+  }
+  area.exitChat(playerId);
+}

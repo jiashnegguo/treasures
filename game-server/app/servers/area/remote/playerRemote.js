@@ -26,6 +26,7 @@ exp.playerLeave = function(args, cb) {
 		utils.invokeCallback(cb);
 		return;
 	}
+	area.exitChat(playerId);
 	area.removePlayer(playerId);
 	area.getChannel().pushMessage({route: 'onUserLeave', code: consts.MESSAGE.RES, playerId: playerId});
 	utils.invokeCallback(cb);
