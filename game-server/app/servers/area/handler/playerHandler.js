@@ -199,7 +199,7 @@ handler.startChat = function (msg, session, next){
     return;
   }
   var channel = app.get('channelService');
-  channel.pushMessageByUids({route:'startChat', entityId: player.entityId, from: player.userId}, [{uid:targetPlayer.id, sid: targetPlayer.serverId}]);
+  channel.pushMessageByUids({route:'onStartChat', entityId: player.entityId, from: player.userId}, [{uid:targetPlayer.id, sid: targetPlayer.serverId}]);
   area.addChat(playerId, targetPlayer.id);
 };
 handler.exitChat = function (msg, session, next)
